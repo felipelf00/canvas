@@ -1,3 +1,5 @@
+//Next: generate new tiles on window resize
+
 const canvas = document.querySelector("canvas");
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
@@ -64,11 +66,16 @@ function Tile(x, y, width, height) {
 const tileArray = [];
 
 
+const width = 80;
+const height = 60;
+const rows = window.innerHeight/height;
+const cols = window.innerWidth/width;
 
-for (var i = 0; i < 10; i++) {
-    for(var j = 0; j < 10; j++) {
-        tileArray.push(new Tile(100+i*80, 100+ j*60, 80, 60));
-    }
+
+for (var i = 0; i < cols; i++) {
+    for(var j = 0; j < rows; j++) {
+        tileArray.push(new Tile(i*width, j*height, width, height));
+    };
 };
 
 
