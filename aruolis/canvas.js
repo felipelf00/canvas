@@ -31,31 +31,33 @@ function Tile(x, y, width, height) {
     this.width = width;
     this.height = height;
     this.distortion = 0;
-    this.angle = 0;
+    this.angle = Math.random()*10-5;
     this.cx = x + width/2;
     this.cy = y + height/2;
     this.distorted = false;
 
     this.draw = () => {
         c.translate(this.cx, this.cy);
-        c.rotate(Math.PI/180 * (this.angle + this.distortion));      
+        c.rotate(Math.PI/180 * (this.angle*this.distortion));      
         c.strokeRect(-this.width/2, -this.height/2, this.width, this.height);
-        c.rotate(Math.PI/180 * (-this.angle - this.distortion));
+        c.rotate(Math.PI/180 * (-this.angle*this.distortion));
         c.translate(-(this.cx), -(this.cy));
     };
     this.update = () => {
-        if (distance(this.cx, this.cy) < 200) {
-            // this.angle = (Math.random()*10 -5);
-            if (!this.distorted) {
-                this.distortion = (Math.random()*10 -5)/(distance(this.cx, this.cy)/200); 
-                this.distorted = true;
-            }                
-        } else {
-            this.distorted = false;
-            this.distortion = 0;
-        };
-        
+            if (distance(this.cx, this.cy) < 100) {
+                this.distortion = 3;
+                this.draw(); 
+                return;
+            };
+            if (distance(this.cx, this.cy) >= 500) {
+                this.distortion = 0;
+                this.draw(); 
+                return;
+            } else {
+                this.distortion = 300/(distance(this.cx, this.cy));
+            }; 
         this.draw();    
+        
     }
 };
 
